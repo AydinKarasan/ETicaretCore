@@ -1,0 +1,32 @@
+﻿
+@model UrunModel
+
+@{
+    ViewData["Title"] = "Ürün Düzenle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@await Html.PartialAsync("_CreateEdit",Model)
+@*<partial name="_CreateEdit" model="Model"/>*@
+<a asp-action="DeleteImage" asp-route-urunId="@Model.Id">İmajı Sil</a>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial"/>
+
+<link href="/Plugins/bootstrapdatepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+<script src="/Plugins/bootstrapdatepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/Plugins/bootstrapdatepicker/locales/bootstrap-datepicker.tr.min.js"></script>
+
+<script>
+    $(function(){
+        $('.tarih').datepicker({
+            language: "tr",
+            orientation: "top auto",
+            autoclose: true,
+            todayHighlight: true
+
+        });
+    });
+</script>
+}

@@ -1,0 +1,105 @@
+﻿@model UrunModel
+<h4>Ürün</h4>
+<hr />
+<div class="row">
+    <div class="col-12">
+
+        @* eğer bir formda herhangi bir dosya yükleme işlemi yapılıyorsa mutlaka enctype HTML attribute'u kullanılmalıdır! *@
+        @*<form asp-action="Create" autocomplete="off">*@
+        @*<form asp-action="Create" autocomplete="off" enctype="multipart/form-data">*@ @*create ve edit view inde ortak kullanıldığı için html helper kullan *@
+
+        @using(Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data" })) @*dosya indirmek için mutlaka yazılmalıdır*@
+        {
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row mb-3">
+                <label asp-for="Adi" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="Adi" class="form-control" />
+                    <span asp-validation-for="Adi" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Aciklama" class="col-2 col-form-label"></label>
+                <div class="col-5">
+
+                    @*<input asp-for="Aciklamasi" class="form-control" />*@
+                    <textarea asp-for="Aciklama" class="form-control" rows="3"></textarea>
+
+                    <span asp-validation-for="Aciklama" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="BirimFiyati" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="BirimFiyati" class="form-control" />
+                    <span asp-validation-for="BirimFiyati" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="StokMiktari" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="StokMiktari" class="form-control" />
+                    <span asp-validation-for="StokMiktari" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="SonKullanmaTarihi" class="col-2 col-form-label"></label>
+                <div class="col-5">
+
+                    @* SonKullanmaTarihi veri tipi DateTime olduğundan input tarih tipinde oluşturulur. *@
+                    @*<input asp-for="SonKullanmaTarihi" class="form-control" />*@
+                    <input asp-for="SonKullanmaTarihi" class="form-control tarih" type="text" />
+
+                    <span asp-validation-for="SonKullanmaTarihi" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="KategoriId" class="col-2 col-form-label"></label>
+                <div class="col-5">
+
+                    @*<select asp-for="KategoriId" class ="form-control" asp-items="ViewBag.KategoriId"></select>*@
+                    <select asp-for="KategoriId" class="form-control kategoriler" asp-items="ViewBag.KategoriId">
+                        <option value="">-- Seçiniz --</option>
+                    </select>
+
+                    <span asp-validation-for="KategoriId" class="text-danger"></span>
+                </div>
+            </div>
+             
+           <div class="row mb-3">
+                <label asp-for="MagazaIdleri" class="col-2 col-form-label"></label>
+                <div class="col-5">
+
+                    @*<select asp-for="MagazaIdleri" class ="form-control" asp-items="ViewBag.MagazaIdleri"></select>*@
+                    <select multiple asp-for="MagazaIdleri" class="form-control magazalar" asp-items="ViewBag.Magazalar">
+                        
+                    </select>
+
+                    <span asp-validation-for="MagazaIdleri" class="text-danger"></span>
+                </div>
+            </div>
+                        
+
+            <div class="row mb-3">
+                <label asp-for="Imaj" class="col-2 col-form-label"></label>  @*dosya indirmek için input oluşturduk*@
+                <div class="col-5">
+                                       
+                    <input name="Imaj" class="form-control " type="file" accept=".jpg, .jpeg, .png" /> @*model üzerinden kullanmayacağız dikkat et byte array olduğu için*@
+
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <div class="offset-2 col-5">
+                    <input type="submit" value="Kaydet" class="btn btn-primary" />
+                    &nbsp;&nbsp;
+                    <button type="reset" class="btn btn-outline-primary">Temizle</button>
+                    &nbsp;&nbsp;
+                    <a asp-action="Index">Ürün Listesi</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

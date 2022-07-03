@@ -1,0 +1,13 @@
+﻿<h2>Yeni Kategori</h2>
+
+<form action="/Kategoriler/OlusturGonder" method="post"> @*burada verileri adres barında değil body kısmında göndererek gizlemiş oluyoruz*@
+    <div class="mb-3 mt-3">
+      <label for="adi">Adı:</label>
+      <input type="text" class="form-control" id="adi" placeholder="Kategori adı giriniz" name="adi">
+    </div>
+    <div class="mb-3">
+      <label for="aciklamasi">Açıklaması:</label>
+      <textarea class="form-control" rows="4" id="aciklamasi" placeholder="Açıklama giriniz" name="aciklamasi"></textarea>
+    </div> 
+    <button type="submit" class="btn btn-primary">Gönder</button>&nbsp;<button type="reset" class="btn btn-warning">Temizle</button>
+</form>

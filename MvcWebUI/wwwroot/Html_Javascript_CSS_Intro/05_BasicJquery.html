@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Basic JQuery</title>
+    <script src="../lib/jquery/dist/jquery.min.js"></script> <!--bilgisayardaki kaynaklardan dosyayı kullandık-->
+    <!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> internetten projeyi çekip kullandık-->
+    <script>
+        //$(document).ready(function () {
+        //    alert("Döküman Yüklendi");
+        //});
+        /*burada jquery kullanarak düğmeye basıldığında ne işlem yapılacağını tanımladık*/
+        $(function () {
+            /*alert("Döküman yüklendi!");*/
+            $("button").click(function () {
+                $("p").hide();
+                /*$("p").show();*/ //slow,fast, 1000,
+            });
+            /*#işareti koyarak id üzerinden myaid ye ulaşabilidik*/
+            /*burada link in default işlemi yönlendirme olduğundan bulunduğu sayfayı yönlendiriyor dikkat etmek gerekli*/
+            /*ama biz buton olarak kullanmak istediğimizden preventDefault dedik*/
+            $("#myaid").click(function () {
+                event.preventDefault();
+                //$("#mylabelid").toggle("fast");
+                //$("#mylabelid").toggle("slow");
+                $("#mylabelid").toggle(1000); //milisaniye cinsinden değer girdik gösterim hızı için
+            });
+            $("#bKaydet").click(function () {
+                var adi = $("#tbAdi").val();
+                var soyadi = $("#tbSoyadi").val();
+                var no = $("#tbNo").val();
+                var sonuc = $("#lOgrenciSonuc");
+                //if (adi.trim() == "" || soyadi.trim() == "" || no.trim() == "") {
+                //    sonuc.text("Adı, soyadı veya no boş olamaz!");
+                //}
+                //else {
+                //    sonuc.html("<b>Adı:" + adi + " soyadı: " + soyadi + " no: " + no + " başarıyla kaydedildi.</b > ");
+                //}
+                var bosBulundu = false;
+                $(".ogrenci").each(function () {
+                    if ($(this).val().trim() == "")
+                        bosBulundu = true;
+                });
+                if (bosBulundu) {
+                    sonuc.text("Adı, soyadı veya no boş olamaz!");
+                    sonuc.css("color", "red");
+                } else {
+                    sonuc.html("<b>Adı:" + adi + " soyadı: " + soyadi + " no: " + no + " başarıyla kaydedildi.</b > ");
+                    sonuc.css("color", "green").slideUp(1000).slideDown(1000);
+                }
+            });
+
+            $("#lDdlSehir").text("Şehir seçiniz...");
+            $("#ddlSehir").change(function () {
+                if ($("#ddlSehir").val() == "") {
+                    $("#lDdlSehir").text("Şehir seçiniz!");
+                } else {
+                    $("#lDdlSehir").text($("#ddlSehir").val());
+                }
+
+                //var sehir = $("#ddlSehir").val(); üsttekinin açık yazımı
+                //$("#lDllSehir").text(sehir);
+            });
+            $("#cbMutlu").prop("checked", true);
+            $("#sMutlu").text(":)");
+            $("#cbMutlu").change(function () {
+                var mutlu = $("#cbMutlu").prop("checked"); /*burada prop kullanarak özellik olarak kullanılan checked e
+                                                                * ulaşabildik val ile ulaşılamaz özellki olduğu için*/
+                if (mutlu) {
+                    $("#sMutlu").text(":)");
+                } else {
+                    $("#sMutlu").text(":(");
+                }
+            });
+            $("#rAnkara").prop("checked", true);
+            $("#rIstanbul").prop("checked", false);
+            $("#rIzmir").prop("checked", false);
+            $("#pRblSehirler").text("6");
+            /*radio butona ulaşmak için:*/
+            $('input[name=rblSehirler]').off("click"); /*burada off("click") diyerek event tekrarlanmasın diye eventi kaldırdık, on şeklinde yazrsan tek sefer çalışmasını sağlarsın*/
+            $('input[name=rblSehirler]').on("click", function () {
+                var value = $('input[name=rblSehirler]:checked').val();
+                $("#pRblSehirler").text(value);
+            });
+
+            $("#bOgrenciler").click(function () {
+                var ogrenciler = $("#lbOgrenciler").val(); /*sonucu alıp kolleksiyona atıyoruz*/
+                var ogrencilerSonuc = "";
+                if (ogrenciler.length != 0) {
+                    for (var i = 0; i < ogrenciler.length; i++) {
+                        ogrencilerSonuc += ogrenciler[i] + ", ";
+                    }
+                }
+                /*f, a, t,*/
+                ogrencilerSonuc = ogrencilerSonuc.substr(0, ogrencilerSonuc.length - 2);
+                $("#bOgrenciler").val(ogrencilerSonuc);
+            });
+            //$("#bCevir").click(function () {
+            //    var sonuc = $("#lSonuc");
+            //    var kelime = $("#tbKelime").val().trim();
+            //    var ters_kelime = "";
+            //    for (var i = kelime.length - 1; i >= 0; i--) {
+            //        ters_kelime += kelime[i];
+            //    }
+            //    $("#lTersKelime").text(ters_kelime);                
+            //        if (ters_kelime == kelime) {
+            //            sonuc.text("palindromdur");
+            //            sonuc.css("color", "green");
+                        
+            //        } else {
+            //            sonuc.text("palindrom değil");
+            //            sonuc.css("color", "red");
+            //        }
+            //   });
+
+        });
+    </script>
+    <script>
+
+    </script>
+</head>
+<body>
+    <p>jQuery</p>
+    <button>Hide jQuery</button>
+    <!--normalde button a onclick diye event tanımlayıp script kısmında yukarıda bunu tanımlıyorduk ama
+        jquery bunu kolaylaştırıyor onclick e gerek kalmıyor. ama birden çok button varsa bu hepsini etkiler buna dikkat etmek lazım-->
+    <hr />
+    <label id="mylabelid">oley tatil geliyor!</label>
+    <br />
+    <a id="myaid" href="">yukarıdaki yazıyı göster / gizle</a>
+    <hr />
+    <table style="border-style:solid;border-width:1px">
+        <tr>
+            <td>Öğrenci Adı:</td>
+            <td><input type="text" id="tbAdi" class="ogrenci" /></td>
+        </tr>
+        <tr>
+            <td>Öğrenci Soyadı:</td>
+            <td><input type="text" id="tbSoyadi" class="ogrenci" /></td>
+        </tr>
+        <tr>
+            <td>Öğrenci No:</td>
+            <td><input type="text" id="tbNo" class="ogrenci" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" id="bKaydet" value="Kaydet" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label id="lOgrenciSonuc"></label>
+            </td>
+        </tr>
+
+    </table>
+    <hr />
+    <select id="ddlSehir">
+        <option value="" selected>--Seçiniz--</option>
+        <option value="6">Ankara</option>
+        <option value="34">İstanbul</option>
+        <option value="35">İzmir</option>
+    </select>
+    <br />
+    <label id="lDdlSehir"></label> <!--kullanıcı seçimi değiştirdiğinde event yapıyoruz-->
+    <hr />
+    <input type="checkbox" id="cbMutlu" checked /> Mutlu musun?
+    <br />
+    <span id="sMutlu"></span>
+    <hr />
+    <input type="radio" name="rblSehirler" id="rAnkara" value="6" />Ankara
+    <input type="radio" name="rblSehirler" id="rIstanbul" value="34" />İstanbul
+    <input type="radio" name="rblSehirler" id="rIzmir" value="35" />İzmir
+    <br />
+    <p id="pRblSehirler">
+
+    </p>
+    <hr />
+    <select multiple id="lbOgrenciler">
+        <option value="f">Fatih</option>
+        <option value="a">Aydın</option>
+        <option value="t">Tolga</option>
+    </select>
+    <br />
+    <input type="button" id="bOgrenciler" value="Seç" />
+    <hr />
+    <!--<table>
+        <tr>
+            <td colspan="2">
+                <label id="lSonuc"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>Kelime Girin:</td>
+            <td><input type="text" id="tbKelime" /></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="bCevir" value="Cevir" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label>Ters Kelime:</label>&nbsp;<label id="lTersKelime"></label>
+            </td>
+        </tr>
+    </table>-->
+    <br />
+    <hr />
+    <label>Kelime:</label>
+    &nbsp;
+    <input type="text" id="tbKelime"  />
+    <br />
+    <input type="button" id="bPalindrom" value="Palindrom Kontrol" />
+    <br />
+    <span id="sPalindromText"></span>
+    <br />
+    <div id="sPalindromHtml"></div>
+    <br />
+    <input id="tbPalindrom" readonly />
+    
+    <script src="05_BasicJquery.js"></script> <!--//sona da eklesek olur-->
+</body>
+</html>

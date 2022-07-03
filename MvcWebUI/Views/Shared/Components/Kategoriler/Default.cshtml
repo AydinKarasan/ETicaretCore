@@ -1,0 +1,26 @@
+﻿@model IEnumerable<KategoriModel>
+
+<ul>
+    <li>
+        <a asp-action="Index" asp-controller="Home" asp-area="Raporlar">Tüm Kategoriler</a>
+    </li>
+        @if(Model != null && Model.Count() >0)
+    {
+        foreach(var kategori in Model)
+        {
+            <li>
+                <a asp-action="Index" asp-controller="Home" asp-area="Raporlar" asp-route-Filtre.KategoriId="@kategori.Id">@kategori.Adi</a>
+            </li>
+        }
+    }
+
+</ul>
+
+<br />
+<form asp-action="Index" asp-controller="Home" asp-area="Raporlar" method="get">
+    <div class="input-group">
+        <input name="Filtre.UrunMagazaAdi" class="form-control" placeholder="Ürün, Mağaza ara..."/>
+        <button type="submit" class="input-group-text">ARA</button>  
+
+    </div>
+</form>

@@ -1,0 +1,14 @@
+﻿@model UrunModel
+
+@{
+    ViewData["Title"] = "Ürün Detayı";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<partial name="_Details" model="Model"/>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Düzenle</a> |
+    <a asp-action="Index">Ürün Listesi</a>
+</div>

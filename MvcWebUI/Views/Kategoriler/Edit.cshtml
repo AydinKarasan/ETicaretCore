@@ -1,0 +1,65 @@
+﻿@model KategoriModel
+
+@{
+    ViewData["Title"] = "Kategori Düzenle";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Kategori</h4>
+<hr />
+<div class="row">
+    <div class="col-12">
+       @* <form action="/Kategoriler/Edit"> @*get*@
+       @*<form asp-action="Edit">*@ @*post*@
+       @* @using (Html.BeginForm("Edit","Kategoriler",FormMethod.Post))*@
+       @using (Html.BeginForm()) @*post*@
+       {
+
+		    @Html.AntiForgeryToken()
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            @Html.ValidationSummary(false, "" , new {@class = "text-danger"})
+
+            <div class="row mb-3">
+                @* <label asp-for="Adi" class="col-2 col-form-label"></label>*@
+                @*@Html.Label("Adi","Adı",new {style = "color:green"})*@
+                @*<label asp-for="Adi" name="Adi" style = "color:green;">Adı</label>*@
+
+                @Html.LabelFor(m => m.Adi, new {@class = "col-2 col-form-label"})
+
+
+				<div class="col-5">
+					@*<input asp-for="Adi" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.Adi, new {@class = "form-control"})
+
+					@*<span asp-validation-for="Adi" class="text-danger"></span>*@
+                    @Html.ValidationMessageFor(m=> m.Adi, "",new{ @class="text-danger"})
+				</div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Aciklamasi" class="col-2 col-form-label"></label>
+				<div class="col-5">
+					@*<textarea asp-for="Aciklamasi" class="form-control"></textarea>*@
+                    @Html.TextAreaFor(m=>m.Aciklamasi, new {@class = "form-control", rows = 4})
+
+					<span asp-validation-for="Aciklamasi" class="text-danger"></span>
+				</div>
+            </div>
+            @*<input type="hidden" asp-for="Id" />*@
+            @Html.HiddenFor(m=>m.Id)
+
+            
+            <div class="row mb-3">
+				<div class="offset-2 col-5">
+					<input type="submit" value="Kaydet" class="btn btn-primary" />
+					&nbsp;&nbsp;
+                    <button type="reset" class="btn btn-outline-primary">Temizle</button>
+					&nbsp;&nbsp;
+					<a asp-action="Index">Kategori Listesi</a>
+				</div>
+            </div>
+        @*</form>*@
+        }
+    </div>
+</div>
+

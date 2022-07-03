@@ -1,0 +1,56 @@
+﻿@model IEnumerable<KategoriModel>     
+
+@{
+    ViewData["Title"] = "Kategori Listesi";
+}
+
+<h2>Kategoriler</h2>
+<br />
+@if(TempData["Mesaj"] != null)
+{
+    <p class="bg-success text-white">@TempData["Mesaj"]</p>
+}
+
+@*<a href="/Kategoriler/OlusturGetir">Yeni Kategori</a>*@
+@*@Html.ActionLink("Yeni Kategori","OlusturGetir")*@
+<a asp-action="OlusturGetir">Yeni Kategori</a>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <p class="bg-info text-black">@Model.Count() kayıt bulundu</p>
+}
+else
+{
+    <p class="bg-warning text-black">Kayıt bulunamadı</p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Adı</th>
+            <th>Açıklaması</th>
+            <th></th>
+        </tr>        
+    </thead>
+    <tbody>
+        @foreach (KategoriModel kategori in Model)
+        {
+            <tr>
+                <td>
+                    @kategori.Adi
+                </td>
+                <td>
+                    @kategori.Aciklamasi
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@kategori.Id">Düzenle</a>
+                   @* @Html.ActionLink("Düzenle","Edit", new {id = kategori.Id})*@
+                   &nbsp;|&nbsp;
+                   <a asp-action="Details" asp-route-id="@kategori.Id">Detaylar</a>
+                    &nbsp;|&nbsp;
+                   <a asp-action="Delete" asp-route-id="@kategori.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

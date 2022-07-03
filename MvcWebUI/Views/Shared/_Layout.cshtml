@@ -1,0 +1,118 @@
+﻿@using MvcWebUI.Settings
+<!DOCTYPE html> @*iconlara bak hepsini font-awesome ile yap*@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@AppSettings.Baslik | @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                @*<a asp-action="Index" asp-controller="Home" class="a-sidebar"><h3>@AppSettings.Baslik</h3></a>*@
+                <a asp-action="Index" asp-controller="Home" class="a-sidebar"><img src="~/files/logopng.jpg" width="125" /></a>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="nav-item">
+                    <a class="a-sidebar" asp-action="Index" asp-controller="Urunler" asp-area=""><i class="fa-solid fa-rectangle-list"></i> Ürünler</a>
+                </li>
+                @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))*@
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        @*<a class="a-sidebar" href="/Kategoriler/Index"> Kategoriler</a>*@
+                        @*@Html.ActionLink("Kategoriler","Index","Kategoriler",null,new{@class="a-sidebar"})*@
+                        <a class="a-sidebar" asp-action="Index" asp-controller="Kategoriler" asp-area=""> Kategoriler</a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a class="a-sidebar" asp-action="Index" asp-controller="Magazalar" asp-area=""> Mağazalar</a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a class="a-sidebar" asp-action="Index" asp-controller="Home" asp-area="Raporlar"> Raporlar</a>
+                    </li>
+                }
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a asp-action="Getir" asp-controller="Sepet" asp-area="" class="a-sidebar"> Sepet</a>
+                    </li>
+                }
+
+            </ul>
+            @*<ul class="list-unstyled admin">*@
+                @*<p>Admin</p>*@
+                @*<li class="nav-item">*@
+                    @*<a class="a-navbar" href="/Database/Seed"> Verileri Sıfırla</a>*@ @*burayı sadece admin gördüğü için kolaylık olsun diye link koymuştuk*@
+                    @*@Html.ActionLink("Verileri Sıfırla","Seed","Database",null,new{@class="a-sidebar"})
+                        <a class="a-sidebar" asp-action="Seed" asp-controller="Database"> Verileri Sıfırla</a>*@
+                @*</li>*@
+            @*</ul>*@
+        </nav>
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="#" id="sidebarCollapse" class="a-navbar" title="Soldaki Menüyü Kapat">
+                            <i class="fa fa-list-alt"></i>
+                            <span id="s-collapse"><b><</b></span> Menü
+                        </a>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon navbar-span"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            @*<a class="a-navbar" href="#"> Ana Sayfa</a>*@
+                        </li>
+                    </ul>
+                    <div class="navbar-text">
+                        <ul class="navbar-nav me-auto">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Kayit" asp-controller="Hesaplar" asp-area=""> Kayıt</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Giris" asp-controller="Hesaplar" asp-area=""> Giriş</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <div class="div-navbar">
+                                        <span class="s-navbar"><i class="fa-solid fa-user"></i> @User.Identity.Name</span>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Cikis" asp-controller="Hesaplar" asp-area=""> Çıkış</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

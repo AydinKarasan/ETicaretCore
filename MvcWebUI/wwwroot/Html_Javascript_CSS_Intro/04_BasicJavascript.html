@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Basic Javascript</title>
+    <script>
+        var isim = "Aydın Karasan";
+        //alert(isim);
+        console.log(isim);
+
+        topla(10, 7);
+
+        var carpim = carp(5, 6);
+        console.log(carpim);
+
+
+        function carp(n1, n2) {
+            return n1 * n2;
+        }
+
+        function topla(n1, n2) {
+            var toplam = n1 + n2;
+            console.log(toplam);
+        }
+    </script>
+    <script>
+        var sayi1 = 1;
+        var sayi2 = 2;
+        var sonuc = hangisiBuyuk(sayi1, sayi2);
+        if (sonuc == null) {
+            console.log(sonuc + " sayılar eşit");
+        } else {
+            console.log(sonuc + " sayısı büyüktür")
+        }
+
+        function hangisiBuyuk(s1, s2) {
+            var sonuc;
+            if (s1 > s2) {
+                sonuc = s1;
+            } else if (s2 > s1) {
+                sonuc = s2;
+            } else //if (s1 == s2) { // s1===s2 , s1 != s2, s1 !== s2
+                //üç eşit olunca değişkenin hem değerlerine hemde tiplerine bakıyor,
+                //== de sadece değişkenindeğerlerine bakıyor
+                sonuc = null; //undefined
+            return sonuc;
+        }
+    </script>
+    <script src="04_BasicJavaScript.js"></script>
+    <script src="JsClasses.js"></script>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body onload="rengiDegistir('yellow');">
+    <label>Sayı 1</label>
+    <input id="sayi1" type="text" />
+    <br />
+    <label>Sayı 2</label>
+    <input id="sayi2" type="text" />
+    <br />
+    <button onclick="topla();">Topla</button>&nbsp;<button onclick="faktoriyel();">Sayı1 Faktoriyel</button>
+    <!--<p>
+        <button onclick="topla();">Topla</button>
+
+        <span>Sonuç:</span>
+        <span id="sonuc"></span>
+
+
+        <button onclick="cikar();">Çıkar</button>
+
+        <span>Sonuç:</span>
+        <span id="sonuc1"></span>
+    </p>
+    <p>
+        <button onclick="carp();">Çarp</button>
+
+        <span>Sonuç:</span>
+        <span id="sonuc2"></span>
+
+
+        <button onclick="bol();">Böl</button>
+
+        <span>Sonuç:</span>
+        <span id="sonuc3"></span>
+    </p>-->
+    <p>
+        <label>Sonuç</label>
+        <span id="sonuc"></span>
+    </p>
+    <hr />
+    <table border="1">
+        <tr>
+            <td>Marka</td>
+            <td colspan="5"><input type="text" id="tbMarka" style="width:97%" /></td>
+        </tr>
+        <tr>
+            <td>Model</td>
+            <td colspan="5"><input type="text" id="tbModel" style="width:97%" /></td>
+        </tr>
+        <tr>
+            <td>Hız</td>
+            <td colspan="5"><input type="text" id="tbHiz" style="width:38%" /></td>
+        </tr>
+        <tr>
+            <td>Hafıza</td>
+            <td colspan="5">
+                <select id="ddlHafiza" style="width:40%">
+                    <option value="8">8 GB</option>
+                    <option value="16" selected>16 GB</option>
+                    <option value="32">32 GB</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Su Soğutma</td>
+            <td colspan="5"><input type="checkbox" id="cbSu" checked /></td>
+        </tr>
+        <tr>
+            <td>Üretim Tarihi</td>
+            <td colspan="5"><input type="date" id="dtpUretim" style="width:38%" /></td>
+        </tr>
+        <tr>
+            <td colspan="6" style="text-align:center"><button onclick="olustur();" style="width:50%">Oluştur ve Getir</button></td>
+        </tr>
+        <tr>
+            <th>
+                Marka
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                Hız
+            </th>
+            <th>
+                Hafıza
+            </th>
+            <th>
+                Su Soğutma
+            </th>
+            <th>
+                Üretim Tarihi
+            </th>
+        </tr>
+        <tr>
+            <td id="marka"></td>
+            <td id="model"></td>
+            <td id="hiz"></td>
+            <td id="hafiza"></td>
+            <td id="susogutma"></td>
+            <td id="uretimtarihi"></td>
+        </tr>
+
+
+    </table>
+</body>
+</html>

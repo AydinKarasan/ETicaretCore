@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SepetElemanGroupByModel>
+
+@{
+    ViewData["Title"] = "Sepet";
+    //Layout = "_YeniLayout"; //yeni bir layout kullanacaksan bunu yapman gerek
+}
+
+<p>
+    <a asp-action="Temizle">Sepeti Temizle</a>
+</p>
+
+
+<table class="table table-hover">
+    <thead class="table-secondary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.UrunAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.ToplamUrunBirimFiyatiDisplay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.ToplamUrunAdedi)
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                @Html.DisplayFor(m => item.UrunAdi)
+            </td>
+            <td>
+                @Html.DisplayNameFor(m => m.ToplamUrunBirimFiyatiDisplay)
+            </td>
+            <td>
+                @Html.DisplayNameFor(m => m.ToplamUrunAdedi)
+            </td>
+            <td>
+                <a asp-action="Sil" asp-route-urunId="@item.UrunId" asp-route-kullaniciId="@item.KullaniciId">Sepetten Sil</a>
+            </td>
+            </tr>
+            <tr>
+                <td>Toplam</td>
+                <td>@Model.Sum(m => m.ToplamUrunBirimFiyati).ToString("C2")</td>
+                <td>@Model.Sum(m => m.ToplamUrunAdedi)</td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>

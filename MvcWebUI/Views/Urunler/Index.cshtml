@@ -1,0 +1,134 @@
+﻿
+@model UrunlerIndexViewModel
+
+@{
+    ViewData["Title"] = "Ürünler";
+}
+
+<h1>@ViewData["Title"]</h1>
+@if(TempData["Mesaj"] != null)
+{
+    <span class="bg-success text-white">@TempData["Mesaj"]</span>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Yeni Ürün</a>
+    </p>
+}
+@*
+<div class="row">
+    <div class="col-1">
+        Ürün Adı:
+    </div>
+    <div class="col-3">
+        <input />
+    </div>
+</div>*@
+
+@if (Model.Urunler != null && Model.Urunler.Count > 0)
+{
+    @*<p class="text-success">@Model.Urunler.Distinct(new UrunModelComparer()).Count() adet bulundu...</p>*@ @*distinctby kullanabilirsin lambda expression *@ @*DistinctBy(m=> m.Id)*@
+    <p class="text-success">@Model.Urunler.Count() adet bulundu...</p>
+    <table class="display" style="width:100%" id="urunler"> @*@datatables için *@
+
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().Adi)
+                </th>            
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().BirimFiyatiDisplay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().StokMiktari)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().SonKullanmaTarihiDisplay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().KategoriAdiDisplay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().MagazaDisplay)
+                </th> 
+                <th style="width:5%;">
+                    @Html.DisplayNameFor(model => model.Urunler.FirstOrDefault().ImgSrcDisplay)
+                </th> 
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Urunler)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adi)
+                    </td>            
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BirimFiyatiDisplay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StokMiktari)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SonKullanmaTarihiDisplay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KategoriAdiDisplay)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.MagazaDisplay)*@
+                        @Html.Raw(item.MagazaDisplay)
+                    </td>
+                     <td>
+                        @if(!string.IsNullOrWhiteSpace(item.ImgSrcDisplay))
+                        {
+                           <a asp-action="DownloadImage" asp-route-urunId="@item.Id"><img src="@item.ImgSrcDisplay" class="img-thumbnail" /></a>
+                        }
+                        else
+                        {
+                            <img src="/files/noImage.png" class="img-thumbnail" />
+                        }
+                    </td>
+
+                    <td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Ekle"  asp-controller="Sepet" asp-route-urunId="@item.Id" title="Sepete Ekle"><i class="fas- fa-cart-plus"></i> </a>@: |
+                            <a asp-action="Details" asp-route-id="@item.Id">Detay</a>@: 
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>@: |
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-dark">Kayıt bulunamadı...</p>
+}
+
+
+@section Scripts
+{
+    <link href="/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#urunler").DataTable({
+                language: {
+                    // Eğer kullanılan metinsel bir dosyada Türkçe karakter sorunu varsa
+                    // dosya Notepad ile açılıp kodlama (encoding) UTF-8'e değiştirilerek kaydedilmelidir.
+                    url: "/json/datatablesTurkish.json"
+                }
+            });
+    });
+    </script>
+}
